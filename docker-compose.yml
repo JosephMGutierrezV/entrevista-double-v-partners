@@ -23,7 +23,7 @@ services:
   fronted:
     image: "nginx"
     build:
-      context: ./frontend
+      context: ./nginx
     container_name: "fronted-container"
     restart: always
     ports:
