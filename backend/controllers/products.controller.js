@@ -4,7 +4,7 @@ const ProductsStructure = require("../models/products.model");
 const getData = async (req, res) => {
   try {
     console.log(`[EMPEZANDO: {getData}]`);
-    const { sku, currency } = req.query;
+    const { sku, currency } = req.params;
     const { value } = await CurrencyStructure.findOne({ code: currency });
     const products = await ProductsStructure.find({ sku });
 
@@ -13,17 +13,16 @@ const getData = async (req, res) => {
         message: "Products not found",
       });
     }
-    
+
     const responseProduct = [];
-    for (const product in products) {
+    console.log(`[PRODUCTS: ${JSON.stringify(products)}]`);
+    for (const product of products) {
       if (product.currency !== currency) {
         console.log(`[CALCULANDO: {con diferente currency}]`);
+        console.log(`[PRODUCT.currency: ${JSON.stringify(product.currency)}]`);
         const productValueCurrency = await CurrencyStructure.findOne({
           code: product.currency,
-        });
-        console.log(
-          `[product.price: ${product.price}], [productValueCurrency.value: ${productValueCurrency.value}], [value: ${value}]`
-        );
+        }).exec();
         const newValue = (product.price / productValueCurrency.value) * value;
         console.log(`[newValue: ${newValue}]`);
         responseProduct.push({
@@ -37,9 +36,9 @@ const getData = async (req, res) => {
         responseProduct.push({
           sku,
           currency,
-          name: products.name,
-          taxRate: products.taxRate,
-          price: products.price,
+          name: product.name,
+          taxRate: product.taxRate,
+          price: product.price,
         });
       }
     }
@@ -78,8 +77,13 @@ const getAllData = async (req, res) => {
   try {
     console.log(`[EMPEZANDO: {getAllData}]`);
     const products = await ProductsStructure.find();
+    console.log(`[DATOS: ${JSON.stringify(products)}]`);
+    const responseSkus = [];
+    for (const product of products) {
+      responseSkus.push({ name: product.sku, code: product.sku });
+    }
     res.status(200).json({
-      products: products.sku,
+      products: responseSkus,
     });
   } catch (errorGetAllData) {
     console.error(errorGetAllData);

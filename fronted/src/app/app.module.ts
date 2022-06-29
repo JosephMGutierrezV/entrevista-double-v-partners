@@ -9,6 +9,12 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { environment } from '../environments/environment'; // Angular CLI environment
+import { DropdownModule } from 'primeng/dropdown';
+import { StoreModule } from '@ngrx/store';
+import { appReducers } from './store/app.reducers';
+import { EffectsModule } from '@ngrx/effects';
+import { EffectsArray } from './store/effects';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 @NgModule({
   declarations: [AppComponent, MainComponent, FooterComponent, HeaderComponent],
@@ -17,6 +23,13 @@ import { environment } from '../environments/environment'; // Angular CLI enviro
     BrowserAnimationsModule,
     FormsModule,
     HttpClientModule,
+    DropdownModule,
+    StoreModule.forRoot(appReducers),
+    EffectsModule.forRoot(EffectsArray),
+    StoreDevtoolsModule.instrument({
+      maxAge: 25,
+      logOnly: environment.production,
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent],

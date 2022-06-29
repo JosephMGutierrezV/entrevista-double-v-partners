@@ -15,12 +15,12 @@ export const loadSkuProductsFailure = createAction(
 
 export const loadProductsWithCurrency = createAction(
   '[Products] Load Products With Currency',
-  props<{ request: IRequestProductsWithCurrency }>()
+  props<{ request: any }>()
 );
 
 export const loadProductsWithCurrencySuccess = createAction(
   '[Products] Load Products With Currency Success',
-  props<{ product: any[] }>()
+  props<{ product: any }>()
 );
 
 export const loadProductsWithCurrencyFailure = createAction(

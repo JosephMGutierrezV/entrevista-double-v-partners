@@ -28,7 +28,7 @@ export class ProductsEffects {
   loadProductsWithCurrency$ = createEffect(() =>
     this.actions$.pipe(
       ofType(actions.products.loadProductsWithCurrency),
-      mergeMap((request: any) =>
+      mergeMap(({ request }) =>
         this.service.getProductsWithCurrency(request).pipe(
           map((resp: any[]) =>
             actions.products.loadProductsWithCurrencySuccess({ product: resp })
