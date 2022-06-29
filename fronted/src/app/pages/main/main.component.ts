@@ -22,6 +22,8 @@ export class MainComponent implements OnInit {
 
   public subscriptions: any[] = [];
 
+  public listsProducts: any[] = [];
+
   constructor(private store: Store<AppState>) {}
 
   ngOnInit(): void {
@@ -40,6 +42,11 @@ export class MainComponent implements OnInit {
         this.sku = skus;
       })
     );
+    this.subscriptions.push(
+      this.store.select('products').subscribe(({ products }) => {
+        this.listsProducts = products;
+      })
+    );
   }
 
   onChangeSku(event: any) {
@@ -55,7 +62,33 @@ export class MainComponent implements OnInit {
   }
 
   onChangeCurrency(event: any) {
-    console.log(event);
-    console.log(this.selectedCurrency);
+    if (event) {
+      if (
+        this.selectedSku !== '' &&
+        this.selectedSku !== undefined &&
+        this.selectedSku !== null
+      ) {
+        const request = {
+          sku: this.selectedSku,
+          currency: event.value,
+        };
+        this.store.dispatch(
+          actions.products.loadProductsWithCurrency({ request })
+        );
+      }
+    }
+  }
+
+  onClick(name: string) {
+    this.listsProducts = this.listsProducts.map((product) => {
+      if (product.name === name) {
+        return { ...product, isSelected: !product.isSelected };
+      }
+      return product;
+    });
+  }
+
+  onClicUpdate(product: any) {
+    console.log(product);
   }
 }

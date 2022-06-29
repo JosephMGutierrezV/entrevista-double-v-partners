@@ -1,7 +1,7 @@
 <app-header></app-header>
 <section class="container caja-principal mb-3 p-3 bg-container">
   <div class="row">
-    <div class="col-6 text-center">
+    <div class="col-6 text-center mb-3">
       <h5>sku</h5>
       <p-dropdown
         #selectSku
@@ -13,7 +13,7 @@
         placeholder="Seleccione"
       ></p-dropdown>
     </div>
-    <div class="col-6 text-center">
+    <div class="col-6 text-center mb-3">
       <h5>Moneda</h5>
       <p-dropdown
         #selectCurrency
@@ -26,9 +26,71 @@
       ></p-dropdown>
     </div>
     <div class="col-12">
-      <div class="row">
-        <div class="col-12"></div>
-      </div>
+      <form class="row mb-3 p-2" *ngFor="let product of listsProducts">
+        <div class="col-6 form-group mb-3">
+          <label for="nameProduct">Nombre Producto</label>
+          <input class="form-control" type="text" [value]="product.name" />
+        </div>
+        <div class="col-6 form-group mb-3">
+          <label for="nameProduct">Precio</label>
+          <input
+            class="form-control"
+            type="text"
+            [value]="product.price | currency"
+          />
+        </div>
+        <div class="col-6 form-group mb-3">
+          <label for="nameProduct">Tasa de descuento</label>
+          <input
+            class="form-control"
+            type="text"
+            [value]="product.taxRate"
+            [disabled]="true"
+          />
+        </div>
+        <div class="col-6 form-group mb-3">
+          <label for="nameProduct">Valor con descuento</label>
+          <input
+            class="form-control"
+            type="text"
+            [value]="
+              product.price - product.price * (product.taxRate / 100) | currency
+            "
+            [disabled]="true"
+          />
+        </div>
+        <div class="col-12 form-check mb-3">
+          <input
+            type="checkbox"
+            class="form-check-input"
+            [id]="product.name"
+            (change)="onClick(product.name)"
+            [checked]="product.isSelected"
+          />
+          <label class="form-check-label" for="exampleCheck1"
+            >Tasa de cambio personalizada</label
+          >
+        </div>
+        <div class="col-4 form-group mb-3" *ngIf="product.isSelected">
+          <label for="nameProduct">Nombre Tasa</label>
+          <input class="form-control" type="text" />
+        </div>
+        <div class="col-4 form-group mb-3" *ngIf="product.isSelected">
+          <label for="nameProduct">Valor Tasa</label>
+          <input class="form-control" type="text" />
+        </div>
+        <div class="col-4 form-group mb-3" *ngIf="product.isSelected">
+          <label for="nameProduct">Codigo Tasa</label>
+          <input class="form-control" type="text" />
+        </div>
+        <button
+          type="submit"
+          class="btn btn-primary"
+          (click)="onClicUpdate(product)"
+        >
+          Actualizar
+        </button>
+      </form>
     </div>
   </div>
 </section>
