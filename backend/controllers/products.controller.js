@@ -56,13 +56,14 @@ const getData = async (req, res) => {
 const setData = async (req, res) => {
   try {
     console.log(`[EMPEZANDO: {setData}]`);
-    const { sku, currency, price, name, taxRate } = req.body;
+    const { sku, currency, price, name, taxRate, count } = req.body;
     const product = new ProductsStructure({
       sku,
       currency,
       price,
       name,
       taxRate,
+      count,
     });
     await product.save();
     console.log(`[DATOCREADO: ${JSON.stringify(product)}]`);
