@@ -5,5 +5,5 @@ COPY package.json /usr/src/app/
 RUN npm install
 COPY . /usr/src/app
 EXPOSE 8001
-CMD [ "node", "app.js" ]
+CMD [ "npm", "start" ]
 
