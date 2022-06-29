@@ -1,0 +1,63 @@
+.caja-principal {
+  background: #ffffff;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 25px 50px 0 rgba(0, 0, 0, 0.1);
+}
+
+.plieges {
+  height: 50px;
+  overflow: hidden;
+  box-shadow: 0 1px 1px rgb(0 0 0 / 20%), 0 8px 0 -3px #f6f6f6,
+    0 9px 1px -3px rgb(0 0 0 / 20%), 0 16px 0 -6px #f6f6f6,
+    0 17px 2px -6px rgb(0 0 0 / 20%);
+}
+
+.vl {
+  border-left: 1px solid #eaeaea;
+  box-sizing: content-box;
+  height: 400px;
+  overflow: visible;
+}
+
+.bg-container {
+  background-color: #efefef;
+}
+
+.bg-title {
+  background-color: #ff3b3f;
+}
+
+.bg-li {
+  background-color: #caebf2;
+}
+
+:host ::ng-deep .p-multiselect {
+  min-width: 15rem;
+}
+
+:host ::ng-deep .multiselect-custom-virtual-scroll .p-multiselect {
+  min-width: 20rem;
+}
+
+:host ::ng-deep .multiselect-custom {
+  .p-multiselect-label {
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+  }
+
+  .country-item-value {
+    padding: 0.25rem 0.5rem;
+    border-radius: 3px;
+    display: inline-flex;
+    margin-right: 0.5rem;
+    background-color: var(--primary-color);
+    color: var(--primary-color-text);
+
+    img.flag {
+      width: 17px;
+    }
+  }
+
+  .country-placeholder {
+    padding: 0.25rem;
+  }
+}

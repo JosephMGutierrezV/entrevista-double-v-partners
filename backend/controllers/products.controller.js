@@ -6,40 +6,43 @@ const getData = async (req, res) => {
     console.log(`[EMPEZANDO: {getData}]`);
     const { sku, currency } = req.query;
     const { value } = await CurrencyStructure.findOne({ code: currency });
-    const product = await ProductsStructure.findOne({ sku });
-    if (!product) {
+    const products = await ProductsStructure.find({ sku });
+
+    if (products.length === 0) {
       return res.status(404).json({
-        message: "Product not found",
+        message: "Products not found",
       });
     }
-    if (product.currency !== currency) {
-      console.log(`[CALCULANDO: {con diferente currency}]`);
-      const productValueCurrency = await CurrencyStructure.findOne({
-        code: product.currency,
-      });
-      console.log(
-        `[product.price: ${product.price}], [productValueCurrency.value: ${productValueCurrency.value}], [value: ${value}]`
-      );
-      const newValue = (product.price / productValueCurrency.value) * value;
-      console.log(`[newValue: ${newValue}]`);
-      const responseProduct = {
-        sku,
-        currency,
-        name: product.name,
-        taxRate: product.taxRate,
-        price: newValue,
-      };
-      res.status(200).json({
-        product: responseProduct,
-      });
+    
+    const responseProduct = [];
+    for (const product in products) {
+      if (product.currency !== currency) {
+        console.log(`[CALCULANDO: {con diferente currency}]`);
+        const productValueCurrency = await CurrencyStructure.findOne({
+          code: product.currency,
+        });
+        console.log(
+          `[product.price: ${product.price}], [productValueCurrency.value: ${productValueCurrency.value}], [value: ${value}]`
+        );
+        const newValue = (product.price / productValueCurrency.value) * value;
+        console.log(`[newValue: ${newValue}]`);
+        responseProduct.push({
+          sku,
+          currency,
+          name: product.name,
+          taxRate: product.taxRate,
+          price: newValue,
+        });
+      } else {
+        responseProduct.push({
+          sku,
+          currency,
+          name: products.name,
+          taxRate: products.taxRate,
+          price: products.price,
+        });
+      }
     }
-    const responseProduct = {
-      sku,
-      currency,
-      name: product.name,
-      taxRate: product.taxRate,
-      price: product.price,
-    };
     res.status(200).json({
       product: responseProduct,
     });
@@ -71,7 +74,21 @@ const setData = async (req, res) => {
   }
 };
 
+const getAllData = async (req, res) => {
+  try {
+    console.log(`[EMPEZANDO: {getAllData}]`);
+    const products = await ProductsStructure.find();
+    res.status(200).json({
+      products: products.sku,
+    });
+  } catch (errorGetAllData) {
+    console.error(errorGetAllData);
+    throw new Error(errorGetAllData);
+  }
+};
+
 module.exports = {
   getData,
   setData,
+  getAllData,
 };
