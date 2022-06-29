@@ -19,8 +19,6 @@ services:
     build:
       context: ./backend
     restart: always
-    networks:
-      - backend
 
   fronted:
     image: "nginx"
@@ -32,10 +30,3 @@ services:
       - "80:80"
     volumes:
       - ./nginx/www:/usr/share/nginx/html:ro
-    networks:
-      - frontend
-      - backend
-
-networks:
-  frontend:
-  backend:
