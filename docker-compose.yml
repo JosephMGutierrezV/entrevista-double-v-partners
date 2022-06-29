@@ -16,9 +16,6 @@ services:
     container_name: "backend-container"
     build:
       context: ./backend
-    volumes:
-      - ./backend:/app
-    working_dir: /app
     restart: always
 
   fronted:
