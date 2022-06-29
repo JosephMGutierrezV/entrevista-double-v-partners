@@ -1,8 +1,8 @@
-version: '3'
+version: "3"
 services:
   database:
-    image: 'mongo'
-    container_name: 'mongo-container'
+    image: "mongo"
+    container_name: "mongo-container"
     environment:
       - MONGO_INITDB_DATABASE=products
       - MONGO_INITDB_ROOT_USERNAME=root
@@ -10,13 +10,13 @@ services:
     volumes:
       - ./dbdata:/data/db
     ports:
-      - '27017:27017'
+      - "27017:27017"
   backend:
-    image: 'node:16.9.0'
-    container_name: 'backend-container'
+    image: "node:16.9.0"
+    container_name: "backend-container"
   fronted:
-    image: 'nginx'
-    container_name: 'fronted-container'
+    image: "nginx"
+    container_name: "fronted-container"
     restart: always
     ports: 
       - "80:80"
