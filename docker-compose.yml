@@ -1,0 +1,24 @@
+version: '3'
+services:
+  database:
+    image: 'mongo'
+    container_name: 'mongo-container'
+    environment:
+      - MONGO_INITDB_DATABASE=products
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=/jmgv96*
+    volumes:
+      - ./dbdata:/data/db
+    ports:
+      - '27017:27017'
+  backend:
+    image: 'node:16.9.0'
+    container_name: 'backend-container'
+  fronted:
+    image: 'nginx'
+    container_name: 'fronted-container'
+    restart: always
+    ports: 
+      - "80:80"
+    volumes: 
+      - ./nginx/www:/usr/share/nginx/html:ro
