@@ -1,8 +1,9 @@
 FROM node:16.9.0
+RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
-COPY package.json ./
+COPY package.json /usr/src/app/
 RUN npm install
-COPY . ./
+COPY . /usr/src/app
 EXPOSE 8001
 CMD [ "node", "app.js" ]
 
