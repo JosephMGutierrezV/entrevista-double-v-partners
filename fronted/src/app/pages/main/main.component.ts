@@ -88,7 +88,28 @@ export class MainComponent implements OnInit {
     });
   }
 
-  onClicUpdate(product: any) {
-    console.log(product);
+  onClickUpdate(product: any) {
+    const valueNewTasa = (<HTMLInputElement>(
+      document.getElementById(product.name + 'Value')
+    )).value;
+
+    const request = {
+      sku: this.selectedSku,
+      currency: this.selectedCurrency ? this.selectedCurrency : 'COP',
+    };
+
+    this.store.dispatch(actions.products.loadProductsWithCurrency({ request }));
+
+    setTimeout(() => {
+      if (valueNewTasa) {
+        this.listsProducts = this.listsProducts.map((product) => {
+          if (product.name === product.name) {
+            const newPrice = product.price * parseFloat(valueNewTasa);
+            return { ...product, price: newPrice };
+          }
+          return product;
+        });
+      }
+    }, 250);
   }
 }

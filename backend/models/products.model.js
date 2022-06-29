@@ -16,6 +16,9 @@ const ProductsSchema = Schema({
   taxRate: {
     type: Number,
   },
+  count: {
+    type: Number,
+  }
 });
 
 module.exports = model("ProductsStructure", ProductsSchema);

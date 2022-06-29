@@ -31,6 +31,7 @@ const getData = async (req, res) => {
           name: product.name,
           taxRate: product.taxRate,
           price: newValue,
+          count: product.count,
         });
       } else {
         responseProduct.push({
@@ -39,6 +40,7 @@ const getData = async (req, res) => {
           name: product.name,
           taxRate: product.taxRate,
           price: product.price,
+          count: product.count,
         });
       }
     }

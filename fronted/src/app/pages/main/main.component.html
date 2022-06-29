@@ -27,6 +27,10 @@
     </div>
     <div class="col-12">
       <form class="row mb-3 p-2" *ngFor="let product of listsProducts">
+        <div class="col-12 form-group mb-3">
+          <label for="nameProduct">Cantidad de Producto</label>
+          <input class="form-control" type="text" [value]="product.count" />
+        </div>
         <div class="col-6 form-group mb-3">
           <label for="nameProduct">Nombre Producto</label>
           <input class="form-control" type="text" [value]="product.name" />
@@ -44,7 +48,7 @@
           <input
             class="form-control"
             type="text"
-            [value]="product.taxRate"
+            [value]="product.taxRate + '%'"
             [disabled]="true"
           />
         </div>
@@ -71,22 +75,19 @@
             >Tasa de cambio personalizada</label
           >
         </div>
-        <div class="col-4 form-group mb-3" *ngIf="product.isSelected">
-          <label for="nameProduct">Nombre Tasa</label>
-          <input class="form-control" type="text" />
-        </div>
-        <div class="col-4 form-group mb-3" *ngIf="product.isSelected">
-          <label for="nameProduct">Valor Tasa</label>
-          <input class="form-control" type="text" />
-        </div>
-        <div class="col-4 form-group mb-3" *ngIf="product.isSelected">
-          <label for="nameProduct">Codigo Tasa</label>
-          <input class="form-control" type="text" />
+        <div class="col-12 form-group mb-3" *ngIf="product.isSelected">
+          <label for="valueTasa">Valor Tasa</label>
+          <input
+            id="{{ product.name + 'Value' }}"
+            class="form-control"
+            type="number"
+          />
         </div>
         <button
-          type="submit"
+          *ngIf="product.isSelected"
+          type="button"
           class="btn btn-primary"
-          (click)="onClicUpdate(product)"
+          (click)="onClickUpdate(product)"
         >
           Actualizar
         </button>
