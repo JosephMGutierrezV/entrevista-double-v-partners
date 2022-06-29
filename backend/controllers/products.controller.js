@@ -48,6 +48,30 @@ const getData = async (req, res) => {
     throw new Error(errorGetData);
   }
 };
+
+const setData = async (req, res) => {
+  try {
+    console.log(`[EMPEZANDO: {setData}]`);
+    const { sku, currency, price, name, taxRate } = req.body;
+    const product = new ProductsStructure({
+      sku,
+      currency,
+      price,
+      name,
+      taxRate,
+    });
+    await product.save();
+    console.log(`[DATOCREADO: ${JSON.stringify(product)}]`);
+    res.status(200).json({
+      message: "Product created",
+    });
+  } catch (errorSetData) {
+    console.error(errorSetData);
+    throw new Error(errorSetData);
+  }
+};
+
 module.exports = {
   getData,
+  setData,
 };
